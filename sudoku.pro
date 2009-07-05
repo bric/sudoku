@@ -16,4 +16,7 @@ SOURCES += sudoku.cpp mainwindow.cpp element.cpp puzzle.cpp field.cpp gamecontro
 RESOURCES+= sudoku.qrc
 macx:RC_FILE = sudoku.icns
 win32:RC_FILE = winrc.rc
-LIBS = -lz -lhpdf
+hpdf {
+  DEFINES += LIBHARU 
+  LIBS = -lz -lhpdf
+}

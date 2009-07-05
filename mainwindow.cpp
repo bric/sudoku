@@ -16,8 +16,10 @@
 #include "puzzle.h"
 #include "field.h"
 #include "gamecontrol.h"
+#ifdef LIBHARU
 #include "hpdf.h"
 #include <setjmp.h>
+#endif
 
 #include <QtCore>
 #include <QtGui>
@@ -172,6 +174,7 @@ void MainWindow::writeGameHtml(QString filename)
 }
 
 
+#ifdef LIBHARU
 //pdf generator specific definitions and error handler
 static const int CELL_WIDTH = 20;
 static const int CELL_HEIGHT = 20;
@@ -247,7 +250,7 @@ void MainWindow::writeGamePDF(QString filename)
     HPDF_SaveToFile (pdf, filename.toAscii());
     HPDF_Free (pdf);
 }
-
+#endif
 
 
 void MainWindow::exportGamePressed()
@@ -258,10 +261,14 @@ void MainWindow::exportGamePressed()
     QString   filters;
     QString   selectedfilter;
 
+#ifdef LIBHARU
     if (settings.value("exporttype","PDF").toString()=="PDF")
       filters="PDF (*.pdf,*.PDF);;HTML (*.html,*.HTML)";
     else
       filters="HTML (*.html,*.HTML);;PDF (*.pdf,*.PDF)";
+#else
+      filters="HTML (*.html,*.HTML)";
+#endif
     filename=QFileDialog::getSaveFileName(this,
 		    tr("choose an export filename"),
 		    settings.value("exportpath",QDir::currentPath()).toString(),
@@ -271,6 +278,7 @@ void MainWindow::exportGamePressed()
       if (filename.toUpper().endsWith(".HTML")) {
         settings.setValue("exporttype","HTML");
         writeGameHtml(filename);
+#ifdef LIBHARU
       } else if (filename.toUpper().endsWith(".PDF")) {
         settings.setValue("exporttype","PDF");
         writeGamePDF(filename);
@@ -283,6 +291,12 @@ void MainWindow::exportGamePressed()
           writeGamePDF(filename.append(".pdf"));
         }
       }
+#else
+      } else if (filename.length()!=0) {
+        settings.setValue("exporttype","HTML");
+        writeGameHtml(filename.append(".html"));
+      }
+#endif
     }
 }
 
