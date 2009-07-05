@@ -1,0 +1,193 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 39;
+	objects = {
+		021CF2DC08D0D5CD0020D9AB = {
+			children = (
+				021CF2E608D0D6140020D9AB,
+				021CF2E708D0D6140020D9AB,
+				021CF2E808D0D6140020D9AB,
+				021CF2E908D0D6140020D9AB,
+				021CF2EA08D0D6140020D9AB,
+				021CF2EB08D0D6140020D9AB,
+				021CF2EC08D0D6140020D9AB,
+				021CF2ED08D0D6140020D9AB,
+				021CF2EE08D0D6140020D9AB,
+				021CF2EF08D0D6140020D9AB,
+				021CF2F008D0D6140020D9AB,
+				021CF2F108D0D6140020D9AB,
+				021CF2F208D0D6140020D9AB,
+				021CF2F308D0D6140020D9AB,
+			);
+			isa = PBXGroup;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2DE08D0D5CD0020D9AB = {
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+			};
+			isa = PBXBuildStyle;
+			name = Development;
+		};
+		021CF2DF08D0D5CD0020D9AB = {
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+			};
+			isa = PBXBuildStyle;
+			name = Deployment;
+		};
+		021CF2E008D0D5CD0020D9AB = {
+			buildSettings = {
+			};
+			buildStyles = (
+				021CF2DE08D0D5CD0020D9AB,
+				021CF2DF08D0D5CD0020D9AB,
+			);
+			hasScannedForEncodings = 0;
+			isa = PBXProject;
+			mainGroup = 021CF2DC08D0D5CD0020D9AB;
+			projectDirPath = "";
+			targets = (
+				021CF2F908D0D9C90020D9AB,
+			);
+		};
+		021CF2E608D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = element.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2E708D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = element.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2E808D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = field.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2E908D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = field.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2EA08D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = gamecontrol.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2EB08D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = gamecontrol.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2EC08D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = mainwindow.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2ED08D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = mainwindow.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2EE08D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = moc_element.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2EF08D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = moc_mainwindow.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2F008D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = puzzle.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2F108D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = puzzle.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2F208D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			path = sudoku.cpp;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2F308D0D6140020D9AB = {
+			fileEncoding = 30;
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			path = sudoku.h;
+			refType = 4;
+			sourceTree = "<group>";
+		};
+		021CF2F908D0D9C90020D9AB = {
+			buildArgumentsString = "$(ACTION)";
+			buildPhases = (
+			);
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				OTHER_LDFLAGS = "";
+				OTHER_REZFLAGS = "";
+				PRODUCT_NAME = build;
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "-Wmost -Wno-four-char-constants -Wno-unknown-pragmas";
+			};
+			buildToolPath = /usr/bin/make;
+			buildWorkingDirectory = /Users/bric/qt/sudoku;
+			dependencies = (
+			);
+			isa = PBXLegacyTarget;
+			name = build;
+			passBuildSettingsInEnvironment = 1;
+			productName = build;
+		};
+	};
+	rootObject = 021CF2E008D0D5CD0020D9AB;
+}
