@@ -1,0 +1,11 @@
+This is a simple implementation of the popular sudoku game.
+It's based on the opensource version of trolltechs Qt4 framework,
+
+To enable PDF export configure the project with
+> qmake OPTIONS+=pdf
+you have to ensure that you have the libharu library installed.
+You may download the library from http://libharu.org e.g. via:
+> wget http://libharu.org/files/libharu-2.1.0.tar.gz
+
+For more information visit: http://seafrog.de/sudoku
+
