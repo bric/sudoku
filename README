@@ -1,11 +1,31 @@
 This is a simple implementation of the popular sudoku game.
-It's based on the opensource version of trolltechs Qt4 framework,
 
-To enable PDF export configure the project with
-> qmake OPTIONS+=pdf
-you have to ensure that you have the libharu library installed.
-You may download the library from http://libharu.org e.g. via:
-> wget http://libharu.org/files/libharu-2.1.0.tar.gz
+build instructions:
+- you will need trolltechs qt4 framework which is available at least for
+  windows, linux, Mac OSX
+- if you want to use also the PDF export feature you will need to build
+  and install also the libharu library which could be downloaded from
+  http://libharu.org.
+- configuration:
+  to build the game without pdf export capability simple hit:
+  > qmake
+  to build with pdf export support use 
+  > qmake OPTIONS+=pdf
+- build:
+  > make
+- the game binary is build in the current directory and could be started
+  via:
+  > ./sudoku
+  
+history:
+
+* 1.1a:  make pdf support optional
+* 1.1:   improved algorithm, localization for germany, different levels and hint functinality
+* 1.0.1: fix include header fault, only relevant if you compile sudoku under linux
+
+If you have problems with the game, questions or suggestions, please feel free to contact me: 
+bric@seafrog.de (Andreas Bricelj) 
+
 
 For more information visit: http://seafrog.de/sudoku
 

@@ -20,7 +20,7 @@ class Element;
 class Field;
 class GameControl;
 
-#define SUDOKU_VERSION "sudoku V1.1"
+#define SUDOKU_VERSION "sudoku V1.1a"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
