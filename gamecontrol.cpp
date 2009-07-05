@@ -7,6 +7,7 @@
  * 
  *  author:  Andreas Bricelj
  *  history: initial version 1.0  09/21/2005
+ *           several updates 1.1  09/12/2006
  * 
  * ****************************************************************************/
 
@@ -22,7 +23,7 @@ window(_window), puzzleNr(0),  startTime(), state(init)
     window->statusBar()->showMessage(SUDOKU_VERSION);
 }
 
-void GameControl::newGame(int n) 
+void GameControl::newGame(int n, int hints) 
 {
     state=generate;
     if (n!=0) {
@@ -31,6 +32,16 @@ void GameControl::newGame(int n)
         srand(QTime::currentTime().msecsTo(QTime()));
         puzzleNr=rand()%100000;
     }
+    for (int r=0;r<9;r++)
+        for (int c=0;c<9;c++) {
+            window->getElement(r,c)->setValue(0);
+            window->getElement(r,c)->setUnchangable();
+            window->getElement(r,c)->setPosVal(0);
+            window->getElement(r,c)->setCorrect();
+        }
+    window->statusBar()->showMessage(tr("please wait ..."));
+    QCursor cursor=window->cursor();
+    window->setCursor(Qt::WaitCursor);   
     puzzle.generate(puzzleNr);
     for (int r=0;r<9;r++)
         for (int c=0;c<9;c++) {
@@ -42,12 +53,78 @@ void GameControl::newGame(int n)
             window->getElement(r,c)->setPosVal(0);
             window->getElement(r,c)->setCorrect();
         }
+    puzzle.solve();
+    while ((hints--)>0)
+      this->getHint();
+    window->setCursor(cursor);
     startTime.start();
     timer->start(1000);
     timerExpired();
     state=playing;
 }
 
+void GameControl::getHint()
+{
+  int numhints=0;
+  if (state==playing || state==generate) {
+    for (int r=0;r<9;r++)
+      for (int c=0;c<9;c++) {
+        if ((window->getElement(r,c)->getValue()!=0) 
+            &&(puzzle.get(r,c)!=window->getElement(r,c)->getValue())
+            &&(!window->getElement(r,c)->isWrong())) {
+          window->getElement(r,c)->setWrong();
+          numhints++;
+        } 
+      }
+    if (numhints==0)
+      for (int r=0;r<9;r++)
+        for (int c=0;c<9;c++) {
+          if (window->getElement(r,c)->isWrong()) {
+            window->getElement(r,c)->setValue(puzzle.get(r,c));
+            window->getElement(r,c)->setCorrect();
+            numhints++;
+            r=9; c=9;
+          }
+        }
+    if (numhints==0) {
+      int ms=-1;
+      int max=9;
+      for (int s=0;s<9;s++) {
+        int sum=0;
+        for (int r=0; r<3; r++)
+          for (int c=0; c<3; c++)
+            if (window->getElement((s/3)*3+r,(s%3)*3+c)->getValue()>0)
+              sum++;
+        if (sum<max) {
+          ms=s;
+          max=sum;
+        }
+      }
+      if (ms>=0) {
+        int rv=rand()%3;
+        for (int r=0; r<3; r++)
+          for (int c=0; c<3; c++)
+            if (window->getElement((ms/3)*3+(r+rv)%3,(ms%3)*3+(c+rv)%3)->getValue()==0) {
+              window->getElement((ms/3)*3+(r+rv)%3,(ms%3)*3+(c+rv)%3)->
+                setValue(puzzle.get((ms/3)*3+(r+rv)%3,(ms%3)*3+(c+rv)%3));
+              if (state==generate) 
+                window->getElement((ms/3)*3+(r+rv)%3,(ms%3)*3+(c+rv)%3)->setUnchangable();
+              numhints++;
+              r=3; c=3;
+            }
+      }
+    }
+    if (numhints>0 && state==playing) {
+      startTime=startTime.addSecs(-30*numhints);
+      timerExpired();
+    }
+  }
+}
+
+int GameControl::getValue(int r, int c)
+{
+  return window->getElement(r,c)->getValue();
+}
 
 void GameControl::editGame() 
 {
@@ -86,12 +163,13 @@ void GameControl::solveGame()
                 }
             state=init;
         } else if (numSolutions==0) {
-            QMessageBox::information(window,SUDOKU_VERSION,"no solution for this puzzle");
+            QMessageBox::information(window,SUDOKU_VERSION,
+                tr("no solution for this puzzle"));
         } else {
-            QMessageBox::information(window,SUDOKU_VERSION,"more than one solution for this puzzle");
+            QMessageBox::information(window,SUDOKU_VERSION,
+                tr("more than one solution for this puzzle"));
         }
     } else if (state==playing || state==solving || state==correcting) {
-        puzzle.solve(false);
         bool correct=true;
         if (state==playing)
             for (int r=0;r<9;r++)
@@ -117,10 +195,12 @@ void GameControl::solveGame()
             }
         if (state==playing) {
             if (correct) {
-                QMessageBox::information(window,SUDOKU_VERSION,"you made it !!!");
+                QMessageBox::information(window,SUDOKU_VERSION,
+                    tr("you made it !!!"));
                 state=finished;
             } else {
-                QMessageBox::information(window,SUDOKU_VERSION,"oops, there is a mistake ...");
+                QMessageBox::information(window,SUDOKU_VERSION,
+                    tr("oops, there is a mistake ..."));
                 state=correcting;
             }
         } else if (state==solving && !correct) {
@@ -135,12 +215,18 @@ void GameControl::solveGame()
 void GameControl::elementChanged(int r, int c, int value) 
 {
     if (state==playing) {
+      bool finished=true;
       for (int r=0; r<9; r++)
           for (int c=0; c<9; c++)
-              if (window->getElement(r,c)->getValue()==0)
-                  return;
+              if (window->getElement(r,c)->getValue()==0) {
+                finished=false;
+                if (window->getElement(r,c)->isWrong())
+                  window->getElement(r,c)->setCorrect();
+              }
+      if (!finished)
+        return;
       int reply=QMessageBox::question(window,SUDOKU_VERSION,
-              "are you finished",
+              tr("are you finished"),
               QMessageBox::Yes,
               QMessageBox::No);
       if (reply==QMessageBox::Yes) {
@@ -180,7 +266,8 @@ void GameControl::elementChanged(int r, int c, int value)
 
 void GameControl::timerExpired() 
 {
-    window->statusBar()->showMessage(QString("current game: %1 : elapsed time %2")
+    window->statusBar()->showMessage(
+        QString(tr("current game: %1 : elapsed time %2"))
             .arg(puzzleNr)
             .arg(QTime().addMSecs(startTime.elapsed()).toString("mm:ss")));
 }

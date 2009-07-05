@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wc-entries
+   xmlns="svn:">
+<entry
+   committed-rev="56"
+   name=""
+   committed-date="2006-09-04T20:07:59.062500Z"
+   url="svn://localhost/sudoku/main/images"
+   last-author="bric"
+   kind="dir"
+   uuid="abf0f695-d2e0-f84a-aa9e-ec8a271ff30e"
+   repos="svn://localhost"
+   revision="69"/>
+<entry
+   committed-rev="56"
+   name="sudoku.png"
+   text-time="2006-09-05T21:36:43.890625Z"
+   committed-date="2006-09-04T20:07:59.062500Z"
+   checksum="a8b6c8b22f0994af0612c29df6f6a080"
+   last-author="bric"
+   kind="file"
+   prop-time="2006-09-05T21:36:43.859375Z"/>
+</wc-entries>

@@ -8,6 +8,7 @@
  *  author:  Andreas Bricelj
  *  history: initial version 1.0  09/21/2005
  *           1.0.1 10/02/2005 change qtcore -> QtCore, qtgui -> QtGui
+ *           several updates 1.1  09/12/2006
  * 
  * ****************************************************************************/
 
@@ -29,10 +30,12 @@ class GameControl: public QObject {
    enum { init, edit, generate, playing, finished, solving, correcting } state; 
     public: 
       GameControl(MainWindow* window);
-      void newGame(int n);
+      void newGame(int n, int hints);
       void solveGame();
       void editGame();
+      void getHint();
       void elementChanged(int r, int c, int value);
+      int  getValue(int r, int c);
 
       public slots:
           void timerExpired();

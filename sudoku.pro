@@ -8,9 +8,12 @@ INCLUDEPATH += .
 CONFIG += static
 CONFIG += release 
 
+TRANSLATIONS=sudoku_de.ts
+
 # Input
 HEADERS += mainwindow.h sudoku.h element.h puzzle.h field.h gamecontrol.h
 SOURCES += sudoku.cpp mainwindow.cpp element.cpp puzzle.cpp field.cpp gamecontrol.cpp
 RESOURCES+= sudoku.qrc
 macx:RC_FILE = sudoku.icns
 win32:RC_FILE = winrc.rc
+LIBS = -lz -lhpdf

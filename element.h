@@ -7,6 +7,7 @@
  * 
  *  author:  Andreas Bricelj
  *  history: initial version 1.0  09/21/2005
+ *           several updates 1.1  09/12/2006
  * 
  * ****************************************************************************/
 
@@ -34,6 +35,7 @@ class Element : public QWidget {
     void setUnchangable();
     void setPosVal(int _posVal);
     int  getPosVal();
+    bool isWrong() {return wrong;}
 
     protected:
     void paintEvent(QPaintEvent* event);

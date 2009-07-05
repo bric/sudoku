@@ -49,63 +49,19 @@ int Puzzle::getChoices(int i, int j) {
     return res;
 }
 
-bool Puzzle::getNextChoices(int& ri, int& rj, int& rchoices) {
-  int minNrChoices=0;
-  rchoices=0;
-  for (int i=0; i<9; i++)
-    for (int j=0; j<9; j++)
-      if (!field[i][j]) {
-         int choices=getChoices(i,j);
-         int nrChoices=0;
-         if (!choices) {
-           rchoices=0;
-           return true;
-         }
-         for (int b=0; b<9; b++)
-           if (choices&(1<<b)) 
-             nrChoices++;
-         if (rchoices==0) {
-           ri=i; rj=j;
-           rchoices=choices;
-           minNrChoices=nrChoices;
-         } else {
-           if (minNrChoices>nrChoices) {
-             ri=i; rj=j;
-             rchoices=choices;
-             minNrChoices=nrChoices;
-           }
-         }
-         if (minNrChoices==1) {
-           return true;
-         }
-      }
-  return minNrChoices>0;
-}
-
-int Puzzle::solve(bool countOnly,bool start) {
-  if (start) {
-    int v;
-    for (int i=0; i<9; i++)
-      for (int j=0; j<9; j++)
-        if ((v=field[i][j])) {
-          field[i][j]=0;
-          int choices=getChoices(i,j);
-          field[i][j]=v;
-          if (!(choices&(1<<(v-1))))
-            return 0; 
-        }
-  }
-  int i,j,choices;
-  if (getNextChoices(i,j,choices)) {
-      if (!choices)
-        return 0;
+int Puzzle::solve(bool countOnly,int start) {
+  if (start<81) {
+    int i=start%9;
+    int j=start/9; 
+    if (field[i][j]==0) {
       int solcount=0;
       int solution=0;
+      int choices=getChoices(i,j);
       for (int s=1; (s<10) && (choices!=0); s++) 
         if (choices&(1<<(s-1))) {
           choices&=~(1<<(s-1)); 
           field[i][j]=s;
-          int numsolutions=solve(true,false);
+          int numsolutions=solve(true,start+1);
           if (numsolutions==1)
             solution=s;
           solcount+=numsolutions;
@@ -116,21 +72,25 @@ int Puzzle::solve(bool countOnly,bool start) {
         }
       if ((solcount==1) && !countOnly) {
         field[i][j]=solution;
-        solve(false,false);
+        solve(false,start+1);
       }
       return solcount;
+    } else {
+      return solve(countOnly,start+1);
+    }
   }
   return 1;
 }
 
 void Puzzle::generate(int nr) 
 {
-//	nr=13946;
+	nr=13946;
     typedef bitset<9> BS;
     BS rows[9], cols[9], quad[9];
     srand(nr);
 
 start:    
+    qDebug("start generation");
     //reset field
     QCoreApplication::processEvents(QEventLoop::ExcludeUserInputEvents);
     for (int j=0; j<9; j++)
@@ -178,6 +138,7 @@ start:
        int j=rest.at(r)&0xff;
        rest.erase(rest.begin()+r);
        int s=field[i][j];
+    qDebug("reduction of (%i,%i) = %i",i,j,s);
        field[i][j]=0;
        int solutions=solve(true);
        if (solutions>1) 

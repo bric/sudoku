@@ -7,6 +7,7 @@
  * 
  *  author:  Andreas Bricelj
  *  history: initial version 1.0  09/21/2005
+ *           several updates 1.1  09/12/2006
  * 
  * ****************************************************************************/
 
@@ -96,10 +97,10 @@ void Element::setValue(int _value)
 { 
     if (value==_value) return; 
     value=_value;
-    emit valueChanged(row,column,value);
     if (value==0) 
         setPosVal(0x1ff);
     update();
+    emit valueChanged(row,column,value);
 }
 
 

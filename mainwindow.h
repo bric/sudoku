@@ -7,6 +7,7 @@
  * 
  *  author:  Andreas Bricelj
  *  history: initial version 1.0  09/21/2005
+ *           several updates 1.1  09/12/2006
  * 
  * ****************************************************************************/
 
@@ -19,7 +20,7 @@ class Element;
 class Field;
 class GameControl;
 
-#define SUDOKU_VERSION "sudoku V1.0"
+#define SUDOKU_VERSION "sudoku V1.1"
 
 class MainWindow : public QMainWindow {
     Q_OBJECT
@@ -30,27 +31,37 @@ class MainWindow : public QMainWindow {
     public:
         MainWindow(); 
         Element* getElement(int row, int column);
+        virtual void closeEvent(QCloseEvent *event);
 
     public slots:
     void newGamePressed();
     void solveGamePressed();
-    void hintPressed();
+    void hintGamePressed();
     void enterGamePressed();
+    void exportGamePressed();
     void helpPressed();
     void aboutPressed();
-    void optionsPressed();
     void elementChanged(int r, int c, int value);
 
     private:
     void createActions();
     void createMenus();
+    void writeGameHtml(QString filename);
+    void writeGamePDF(QString filename);
 
+    QMenu *fileMenu;
     QMenu *gameMenu;
+    QMenu *levelMenu;
     QMenu *helpMenu;
     QAction *newAct;
     QAction *enterAct;
     QAction *solveAct;
-    QAction *optionsAct;
+    QAction *exportAct;
+    QAction *hintAct;
+    QAction *expertAct;
+    QAction *normalAct;
+    QAction *beginnerAct;
+    QActionGroup *levelGroup;
     QAction *aboutAct;
     QAction *helpAct;
     QAction *quitAct;

@@ -7,6 +7,7 @@
  * 
  *  author:  Andreas Bricelj
  *  history: initial version 1.0  09/21/2005
+ *           several updates 1.1  09/12/2006
  * 
  * ****************************************************************************/
 
@@ -16,10 +17,11 @@
 class Puzzle {
     unsigned char field[9][9];
 
-    bool isallowed(int i, int j, int s);
+    int getChoices(int i, int j);
+    bool getNextChoices(int& i, int& j, int& choices);
     public:
     Puzzle();
-    int solve(bool countOnly=false, int start=0);
+    int solve(bool countOnly=false, bool start=true);
     void generate(int nr); 
     int get(int row, int column);
     void set(int row, int column, int value);

@@ -7,6 +7,7 @@
  * 
  *  author:  Andreas Bricelj
  *  history: initial version 1.0  09/21/2005
+ *           several updates 1.1  09/12/2006
  * 
  * ****************************************************************************/
 
@@ -18,6 +19,16 @@
 int main(int argc, char *argv[])
 {
     QApplication app(argc, argv);
+    
+    QString locale = QLocale::system().name();
+
+    QTranslator translator;
+    if (!translator.load(QString("sudoku_") + locale))
+      translator.load(QString("sudoku_") + locale,"/usr/lib/");
+    app.installTranslator(&translator);
+ 
+    QCoreApplication::setOrganizationName("seafrog");
+    QCoreApplication::setApplicationName("sudoku");
 
     MainWindow window;
     window.show();
