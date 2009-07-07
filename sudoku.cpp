@@ -23,7 +23,7 @@ int main(int argc, char *argv[])
     QString locale = QLocale::system().name();
 
     QTranslator translator;
-    if (!translator.load(QString("sudoku_") + locale))
+    if (!translator.load(QString(":/sudoku_") + locale))
       translator.load(QString("sudoku_") + locale,"/usr/lib/");
     app.installTranslator(&translator);
  

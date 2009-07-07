@@ -2,5 +2,6 @@
 <RCC version="1.1.1">
     <qresource>
         <file>images/sudoku.png</file>
+        <file>sudoku_de.qm</file>
     </qresource>
 </RCC>
